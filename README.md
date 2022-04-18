@@ -17,5 +17,5 @@ if(length(new_packages)) install.packages(new_packages)
 ## Workshop Instructor
 
 <div style = "float:left;"><img src = "img/justin_post.jpg" width = "250"></div>
-Justin Post is a Teaching Associate Professor and the Director of Online Education in the Department of Statistics at North Carolina State University. Teaching has always been his passion and that is his main role at NCSU. He teaches undergraduate and graduate courses in both face-to-face and distance settings.  Justin is an R enthusiast and has taught many short courses on R, the tidyverse, R shiny, and more.
+<div style = "float:right;">Justin Post is a Teaching Associate Professor and the Director of Online Education in the Department of Statistics at North Carolina State University. Teaching has always been his passion and that is his main role at NCSU. He teaches undergraduate and graduate courses in both face-to-face and distance settings.  Justin is an R enthusiast and has taught many short courses on R, the tidyverse, R shiny, and more.
 Working Title: Using R Markdown & the Tidyverse to Create Reproducible Research
