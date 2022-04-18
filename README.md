@@ -10,9 +10,9 @@ new_packages <- package_list[!(package_list %in% installed.packages()[,"Package"
 if(length(new_packages)) install.packages(new_packages)
 ```
 
-## Website
+## Course Files
 
-<https://jbpost2.github.io/R4Reproducibility/>
+The material for this workshop can be found [at the course files page](CourseFiles.html).
 
 ## Workshop Instructor
 
