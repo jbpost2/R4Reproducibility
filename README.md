@@ -1,5 +1,9 @@
 # Using R Markdown & the Tidyverse to Create Reproducible Research
 
+<a href = "https://jbpost2.github.io/R4Reproducibility/CourseFiles.html"><button type="button">Course Files Page</button></a> 
+
+## Course Summary
+
 R is one of the major platforms for doing statistical analysis and research.  This course introduces the powerful and popular R software through the use of the RStudio IDE.  This course covers the use of the `tidyverse` suite of packages to import raw data (`readr`), do common data manipulations (`dplyr` and `tidyr`), and summarize data numerically (`dplyr`) and graphically (`ggplot2`).  In order to promote reproducibility of analyses, we will discuss how to code using R Markdown - a method of R coding that allows one to easily create PDF and HTML documents that interweave narrative, R code, and results.  
 
 ## Packages Required
@@ -9,10 +13,6 @@ package_list <- c("tidyverse", "GGally", "Lahman", "tinytex")
 new_packages <- package_list[!(package_list %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
 ```
-
-## Course Files
-
-The material for this workshop can be found [at the course files page](CourseFiles.html).
 
 ## Workshop Instructor
 
