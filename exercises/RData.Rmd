@@ -1,0 +1,180 @@
+---
+title: "Reproducibility and EDA Examples using R Markdown and the `tidyverse`"
+output: 
+  html_document:
+    toc: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      eval = TRUE, 
+                      fig.align = 'center', 
+                      out.width = "25%",
+                      warning = FALSE,
+                      message = FALSE
+                      )
+```
+
+# Introduction & Purpose
+
+This document serves to provide some basic information about the `tidyverse` followed by an example Exploratory Data Analysis.
+
+The `tidyverse` is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+Install the complete tidyverse with:
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+
+# `tidyverse` Core Packages {.tabset} 
+
+The four *core* packages that we'll use the most are given below along with their purpose and a quick example of some functionality.
+
+## dplyr
+
+```{r, echo = FALSE}
+knitr::include_graphics("https://github.com/jbpost2/R4Reproducibility/raw/main/exercises/img/dplyr.png")
+```  
+
+[`dplyr` is a grammar of data manipulation](https://dplyr.tidyverse.org/), providing a consistent set of verbs that help you solve the most common data manipulation challenges:
+
+- `mutate()` adds new variables that are functions of existing variables
+- `select()` picks variables based on their names.
+- `filter()` picks cases based on their values.
+- `summarise()` reduces multiple values down to a single summary.
+- `arrange()` changes the ordering of the rows.
+
+These all combine naturally with `group_by()` which allows you to perform any operation “by group”. You can learn more about them by typing `vignette("dplyr")` into the console after reading the `dplyr` package in via `library(dplyr)`. As well as these single-table verbs, `dplyr` also provides a variety of two-table verbs, which you can learn about in `vignette("two-table")`.
+
+If you are new to `dplyr`, the best place to start is the data transformation chapter in [R for data science](https://r4ds.had.co.nz/).
+
+```{r}
+library(dplyr)
+
+starwars %>% 
+  filter(species == "Droid")
+```
+
+## ggplot2  
+
+```{r, echo = FALSE}
+knitr::include_graphics("https://github.com/jbpost2/R4Reproducibility/raw/main/exercises/img/ggplot2.png")
+```  
+
+[`ggplot2` is a system for declaratively creating graphics, based on The Grammar of Graphics](https://ggplot2.tidyverse.org/). You provide the data, tell `ggplot2` how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+
+```{r, out.width = "75%"}
+library(ggplot2)
+
+ggplot(mpg, aes(displ, hwy, colour = class)) + 
+  geom_point()
+```
+
+## readr
+
+```{r, echo = FALSE}
+knitr::include_graphics("https://github.com/jbpost2/R4Reproducibility/raw/main/exercises/img/readr.png")
+```  
+
+[The goal of `readr`](https://readr.tidyverse.org/) is to provide a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is designed to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes. If you are new to `readr`, the best place to start is the data import chapter in [R for data science](https://r4ds.had.co.nz/).
+
+## tidyr  
+
+```{r}
+knitr::include_graphics("https://github.com/jbpost2/R4Reproducibility/raw/main/exercises/img/tidyr.png")
+```  
+
+[The goal of `tidyr`](https://tidyr.tidyverse.org/) is to help you create tidy data. Tidy data is data where:
+
+1. Every column is variable.
+2. Every row is an observation.
+3. Every cell is a single value.
+
+Tidy data describes a standard way of storing data that is used wherever possible throughout the tidyverse. If you ensure that your data is tidy, you’ll spend less time fighting with the tools and more time working on your analysis. Learn more about tidy data in `vignette("tidy-data")`.
+
+```{r}
+library(tidyr)
+
+relig_income
+
+relig_income %>% 
+  pivot_longer(-religion, names_to = "income", values_to = "frequency")
+```
+
+
+# Data Structures in `R`
+
+The two most important data structures in `R` are the (atomic) vector and data frame.  Let's do some practice with those.
+
+## Vectors
+
+1. We often need to get every combination of a vector or vectors to use when fitting models. For instance if I had three vectors 
+- `a` (with elements `10` and `12`)
+- `b` (with elements `1` and `3`)
+- `c` ( with elements `c1`, `c2`, and `c3`)
+we often need to create a data frame that looks like the following:  
+
+|Var1 | Var2 | Var 3 |
+|----:|-----:|------:|
+|10   | 1    | c1    |
+|12   | 1    | c1    |
+|10   | 3    | c1    |
+|12   | 3    | c1    |
+|10   | 1    | c2    |
+|12   | 1    | c2    |
+|10   | 3    | c2    |
+|12   | 3    | c2    |
+|10   | 1    | c3    |
+|12   | 1    | c3    |
+|10   | 3    | c3    |
+|12   | 3    | c3    |
+
+<ul>
+a. Create a (numeric) vector with values 10 and 12.  Save this as an R object, `a`.  Repeat to create `b`. 
+    ```{r}
+    a <- c(10, 12)
+    b <- c(1, 3)
+    ```
+b. Create a (character) vector with values 'c1', 'c2', and 'c3'. Save this as an R object, `c`.
+    ```{r}
+    c <- c("c1", "c2", "c3")
+    ```
+c. Use the `expand.grid()` function to create the data frame above.  See the examples at the bottom of the help page (`help("expand.grid")`)
+    ```{r}
+    expand.grid(a, b, c)
+    ```
+    
+</ul>
+
+2. Another common task is to combine character strings together.  This can be done with the `paste()` function.
+    a. Create a character vector (call it `adj`) of length 4 consisting of adjectives (answers will vary).
+        ```{r}
+    adj <- c("red", "beautiful", "old", "new")
+        ```
+    b. Create a second character vector of same length consisting of nouns (call it `nouns`).
+        ```{r}
+    nouns <- c("phone", "car", "house", "pizza")
+        ```
+    c. Use the `paste()` function to combine these vectors elementwise.  Play around with the `sep = ` argument.
+        ```{r}
+    paste(adj, nouns)
+    paste(adj, nouns, sep = "_")
+        ```
+
+## Data Frames
+
+R has some built in data frames that we can use.  Run `ToothGrowth` (note the case) in your console to see a data set about tooth growth for Guinea Pigs based off of differing amounts of Vitamin C (VC vs OJ).  
+
+1. Determine the internal structure of the `ToothGrowth` object using the `str()` function
+    ```{r}
+    str(ToothGrowth)
+    ```
+2. Have R return just the dose column using two different methods.
+    ```{r}
+    ToothGrowth[, 3]
+    ToothGrowth$dose
+    dplyr::select(ToothGrowth, dose) #covered later
+    ```

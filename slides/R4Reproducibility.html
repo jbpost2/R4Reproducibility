@@ -659,17 +659,19 @@ Ex: Iris has `r` `length(iris[ ,1])` observations `\(\rightarrow\)` Iris has 150
 
 ---
 
-# To R!
+# Let's Practice
 
-Quick example 
+- Take the raw text [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/raw.txt)
+- Create the HTML output [here](https://jbpost2.github.io/R4Reproducibility/exercises/Markdown.html)
 
-- Create a `.Rmd` file
-
-- Knit to different output types
-
-- Change local and global chunk options
-
-- Use R Markdown syntax
+Guidance:
+- Copy all the text into a `.Rmd` file
+- Knit the document as is to start
+- Add headers, reknit
+- [Update YAML header](https://bookdown.org/yihui/rmarkdown/html-document.html) to add code folding, reknit 
+- Update the global chunk options (`echo`, `eval` should be `TRUE`, `message` should be `FALSE`), reknit
+- Modify local chunk options on the images to suppress code, reknit
+- [Add in markdown syntax](https://github.com/jbpost2/R4Reproducibility/blob/main/cheatsheets/rmarkdown-reference.pdf) (links, code font, etc.), reknit
 
 
 ---

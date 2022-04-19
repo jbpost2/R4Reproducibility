@@ -666,21 +666,6 @@ Ex: Iris has `r` `length(iris[ ,1])` observations $\rightarrow$ Iris has `r leng
 
 ---
 
-# To R!
-
-Quick example 
-
-- Create a `.Rmd` file
-
-- Knit to different output types
-
-- Change local and global chunk options
-
-- Use R Markdown syntax
-
-
----
-
 # Recap!  
 
 - R Markdown allows for easily reproducible analyses and documenting of thought processes  
@@ -692,6 +677,27 @@ Quick example
 - [Cheat Sheet link](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) great for getting started  
 
 - Everything you could want to know about R Markdown in [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+
+
+---
+
+# Let's Practice
+
+- Take the raw text [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/raw.txt)
+- Create the HTML output [here](https://jbpost2.github.io/R4Reproducibility/exercises/Markdown.html)
+
+Guidance:
+- Create a new .Rmd file and replace its test with the raw text (copy/paste)
+- Knit the document as is to start
+- Add headers (the `dplyr`, `ggplot2`, `readr`, and `tidyr` sections are second level headers), reknit
+- [Update YAML header](https://bookdown.org/yihui/rmarkdown/html-document.html) to add code folding, reknit 
+- Update the global chunk options (`echo`, `eval` should be `TRUE`, `message` should be `FALSE`), reknit
+- Modify local chunk options on the images to suppress code, reknit
+- [Add in markdown syntax](https://github.com/jbpost2/R4Reproducibility/blob/main/cheatsheets/rmarkdown-reference.pdf) (links, code font, etc.), reknit
+- [Add tabsets](https://bookdown.org/yihui/rmarkdown/html-document.html), reknit
+
+
+
 
 
 ---
@@ -1008,9 +1014,16 @@ Data Frame (2D data structure)
 
 ---
 
-# To R!
+# Let's Practice
 
-Example for them
+We'll add to our `.Rmd` file from the previous activity
+
+- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/RData.txt)
+
+Guidance:
+- Copy and paste the text from above into the bottom of the document, reknit
+- Add to the code chunks, evaluating in the notebook
+- Reknit occasionally to check the output
 
 
 ---
@@ -1786,11 +1799,16 @@ dbGetQuery(con, "SELECT * FROM invoices") %>%
 
 ---
 
-# To R!
+# Let's Practice
 
-Quick example 
+We'll add to our `.Rmd` file from the previous activity
 
-- Read in excel data and connect to a database
+- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ReadingData.txt)
+
+Guidance:
+- Copy and paste the text from above into the bottom of the document, reknit
+- Add to the code chunks, evaluating in the notebook
+- Reknit occasionally to check the output
 
 
 ---

@@ -1,0 +1,68 @@
+# Data Structures in `R`
+
+The two most important data structures in `R` are the (atomic) vector and data frame.  Let's do some practice with those.
+
+## Vectors
+
+1. We often need to get every combination of a vector or vectors to use when fitting models. For instance if I had three vectors 
+- `a` (with elements `10` and `12`)
+- `b` (with elements `1` and `3`)
+- `c` ( with elements `c1`, `c2`, and `c3`)
+we often need to create a data frame that looks like the following:
+
+|Var1 | Var2 | Var 3 |
+|----:|-----:|------:|
+|10   | 1    | c1    |
+|12   | 1    | c1    |
+|10   | 3    | c1    |
+|12   | 3    | c1    |
+|10   | 1    | c2    |
+|12   | 1    | c2    |
+|10   | 3    | c2    |
+|12   | 3    | c2    |
+|10   | 1    | c3    |
+|12   | 1    | c3    |
+|10   | 3    | c3    |
+|12   | 3    | c3    |
+
+<ul>
+a. Create a (numeric) vector with values 10 and 12.  Save this as an R object, `a`.  Repeat to create `b`. 
+    ```{r}
+
+    ```
+b. Create a (character) vector with values 'c1', 'c2', and 'c3'. Save this as an R object, `c`.
+    ```{r}
+
+    ```
+c. Use the `expand.grid()` function to create the data frame above.  See the examples at the bottom of the help page (`help("expand.grid")`)
+    ```{r}
+
+    ```
+</ul>
+
+2. Another common task is to combine character strings together.  This can be done with the `paste()` function.
+    a. Create a character vector (call it `adj`) of length 4 consisting of adjectives (answers will vary).
+        ```{r}
+    
+        ```
+    b. Create a second character vector of same length consisting of nouns (call it `nouns`).
+        ```{r}
+
+        ```
+    c. Use the `paste()` function to combine these vectors elementwise.  Play around with the `sep = ` argument.
+        ```{r}
+
+        ```
+
+## Data Frames
+
+R has some built in data frames that we can use.  Run `ToothGrowth` (note the case) in your console to see a data set about tooth growth for Guinea Pigs based off of differing amounts of Vitamin C (VC vs OJ).  
+
+1. Determine the internal structure of the `ToothGrowth` object using the `str()` function
+    ```{r}
+
+    ```
+2. Have R return just the dose column using two different methods.
+    ```{r}
+
+    ```
