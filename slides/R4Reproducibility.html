@@ -2378,7 +2378,7 @@ Basic access via
 
 ---
 
-#  Big Recap 
+#  Big Recap!
 
 `tidyverse` - nice ecosystem of packages with similar behavior and syntax
 
@@ -2398,7 +2398,7 @@ Basic access via
 layout: false
 class: title-slide-section-red, middle
 
-# Row Manipulations with `dplyr`   
+# Data Manipulations with `dplyr`   
 Justin Post
 
 ---
@@ -2412,7 +2412,7 @@ layout: true
   
 We may want to subset our full data set or create new variables (columns)   
 
-- Grab only certain types of observations (**filter rows**)
+- Grab only certain types of observations (**filter** rows)
 
 &lt;img src="img/filterVisualF.png" width="500px" style="display: block; margin: auto;" /&gt;
 
@@ -2423,7 +2423,7 @@ We may want to subset our full data set or create new variables (columns)
   
 We may want to subset our full data set or create new variables (columns)   
 
-- Look at only certain variables (**select columns**)  
+- Look at only certain variables (**select** columns)  
 
 &lt;img src="img/selectVisualF.png" width="400px" style="display: block; margin: auto;" /&gt;
 
@@ -2434,7 +2434,7 @@ We may want to subset our full data set or create new variables (columns)
   
 We may want to subset our full data set or create new variables (columns)   
 
-- Create new variables
+- Create new variables (**mutate** columns)
 
 &lt;img src="img/createVarVisualF.png" width="520px" style="display: block; margin: auto;" /&gt;
 
@@ -2443,14 +2443,17 @@ We may want to subset our full data set or create new variables (columns)
 
 # `tidyverse`  
 
-`tidyverse` provides a coherent ecosystem for these tasks via the `dplyr` package!  
+`tidyverse` provides a coherent ecosystem for these tasks via the `dplyr` package!  [Cheat Sheet](https://github.com/jbpost2/R4Reproducibility/blob/main/cheatsheets/data-transformation.pdf)
 
-- Good function defaults
+- Functions take in a `tibble` (special data frames)
 
-- All work on `tibbles` (special data frames)
+- Functions output a `tibble`
 
 - All functions have similar syntax!  
 `function(tibble, actions, ...)`
+
+- Chaining makes for readable code: 
+`tibble %&gt;% function(actions)`
 
 ---
 
@@ -2548,16 +2551,6 @@ myBatting
 ## #   CS &lt;int&gt;, BB &lt;int&gt;, SO &lt;int&gt;, IBB &lt;int&gt;, HBP &lt;int&gt;, SH &lt;int&gt;, SF &lt;int&gt;,
 ## #   GIDP &lt;int&gt;
 ```
-
-
----
-
-# `filter()` - Subset Rows 
-
-- Grab only certain types of observations (**filter rows**)
-
-&lt;img src="img/filterVisualF.png" width="500px" style="display: block; margin: auto;" /&gt;
-
 
 
 ---
@@ -19542,22 +19535,6 @@ arrange(myBatting, teamID, desc(G))
 ## #   GIDP &lt;int&gt;
 ```
 
-
-
----
-
-# To R!
-
-Quick example 
-
-- Read in `dplyr`  
-
-- Rearrange rows
-
-- Filter rows
-
-
-
 ---
 
 # Recap!  
@@ -19568,31 +19545,7 @@ Quick example
     + `filter()`
     + `arrange()`
     
-- [`dplyr` and `tidyr` Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-
----
-
-layout: false
-class: title-slide-section-red, middle
-
-# Column Manipulations with `dplyr`   
-Justin Post
-
----
-layout: true
-
-&lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
-
----
-
-# Data manipulation idea  
-
-We may want to subset our full data set or create new data   
-
-- Look at only certain variables (**select columns**)  
-    
-&lt;img src="img/selectVisualF.png" width="400px" style="display: block; margin: auto;" /&gt;
-
+- [`dplyr` and `tidyr` Cheat Sheet](https://github.com/jbpost2/R4Reproducibility/blob/main/cheatsheets/data-transformation.pdf)
 
 ---
 
@@ -24095,16 +24048,6 @@ myBatting %&gt;%
 
 ---
 
-# To R!
-
-Quick example 
-
-- Use `select()` and `rename()` to modify columns of a `tibble`
-
-- Use piping/chaining  
-
----
-
 # Recap!  
 
 - `dplyr` allows for easy column manipulations
@@ -24112,31 +24055,7 @@ Quick example
     + `select()`
     + `rename()`
 
-- Pipe or Chain with `%&gt;%`  i
-
-- [`dplyr` and `tidyr` Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-
----
-
-layout: false
-class: title-slide-section-red, middle
-
-# Creating New Variables with `dplyr`   
-Justin Post
-
----
-layout: true
-
-&lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
-
----
-
-
-# Data manipulation idea  
-
-- Create new variables
-
-&lt;img src="img/createVarVisualF.png" width="500px" style="display: block; margin: auto;" /&gt;
+- Pipe or Chain with `%&gt;%`
 
 
 ---
@@ -24324,6 +24243,63 @@ fandango %&gt;%
 ```
 
 
+
+---
+
+# `mutate()` &amp; `group_by()` - Create New Column(s)
+
+- `across(.cols, .funs)` for multiple columns/summaries at once
+
+
+```r
+fandango %&gt;% 
+  select(year, rottentomatoes, metacritic) %&gt;% 
+  group_by(year) %&gt;% 
+  mutate(across(c(rottentomatoes, metacritic), list(avg = mean, SD = sd)))
+```
+
+```
+## # A tibble: 146 x 7
+## # Groups:   year [2]
+##    year rottentomatoes metacritic rottentomatoes_avg rottentomatoes_SD
+##   &lt;dbl&gt;          &lt;int&gt;      &lt;int&gt;              &lt;dbl&gt;             &lt;dbl&gt;
+## 1  2015             74         66               58.4              30.3
+## 2  2015             85         67               58.4              30.3
+## 3  2015             80         64               58.4              30.3
+## 4  2015             18         22               58.4              30.3
+## 5  2015             14         29               58.4              30.3
+## # ... with 141 more rows, and 2 more variables: metacritic_avg &lt;dbl&gt;,
+## #   metacritic_SD &lt;dbl&gt;
+```
+
+---
+
+# `mutate()` &amp; `group_by()` - Create New Column(s)
+
+- `across(.cols, .funs)` for multiple columns/summaries at once
+
+
+```r
+fandango %&gt;% 
+  select(year, ends_with("user")) %&gt;%
+  group_by(year) %&gt;% 
+  mutate(across(ends_with("user"), list(trim_mean = mean), trim = 0.2))
+```
+
+```
+## # A tibble: 146 x 5
+## # Groups:   year [2]
+##    year rottentomatoes_user metacritic_user rottentomatoes_use~ metacritic_user~
+##   &lt;dbl&gt;               &lt;int&gt;           &lt;dbl&gt;               &lt;dbl&gt;            &lt;dbl&gt;
+## 1  2015                  86             7.1                64.9             6.63
+## 2  2015                  80             7.5                64.9             6.63
+## 3  2015                  90             8.1                64.9             6.63
+## 4  2015                  84             4.7                64.9             6.63
+## 5  2015                  28             3.4                64.9             6.63
+## # ... with 141 more rows
+```
+
+
 ---
 
 # Conditional Execution 
@@ -24464,9 +24440,7 @@ Quick example
 
 - Use `if_else()` to do conditional creation
     
-- Note: `cut()` can be used to categorize a numeric variable!
-
-- [`dplyr` and `tidyr` Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+- [`dplyr` and `tidyr` Cheat Sheet](https://github.com/jbpost2/R4Reproducibility/blob/main/cheatsheets/data-transformation.pdf)
 
 ---
 
@@ -24635,114 +24609,6 @@ newTempsData %&gt;%
 
 ---
 
-# Reshaping Data  
-
-- Separate a column (or combine two columns) using `separate()` and `unite()`
-
-&lt;img src="img/uniteSeparateF.png" width="650px" style="display: block; margin: auto;" /&gt;
-
-
-
----
-
-# Reshaping Data  
-
-- Separate a column (or combine two columns) using `separate()` and `unite()`
-
-- Consider data set on air pollution in Chicago  
-
-
-
-```r
-chicagoData &lt;- read_csv("https://www4.stat.ncsu.edu/~online/datasets/Chicago.csv")
-chicagoData
-```
-
-```
-## # A tibble: 1,461 x 11
-##       X city  date     death  temp dewpoint  pm10    o3  time season  year
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
-## 1  3654 chic  1/1/1997   137  36       37.5  13.1  5.66  3654 winter  1997
-## 2  3655 chic  1/2/1997   123  45       47.2  41.9  5.53  3655 winter  1997
-## 3  3656 chic  1/3/1997   127  40       38    27.0  6.29  3656 winter  1997
-## 4  3657 chic  1/4/1997   146  51.5     45.5  25.1  7.54  3657 winter  1997
-## 5  3658 chic  1/5/1997   102  27       11.2  15.3 20.8   3658 winter  1997
-## # ... with 1,456 more rows
-```
-
-
----
-
-# `separate`
-
-- Can split columns with `separate`:
-
-
-```r
-chicagoData %&gt;% 
-  separate(date, c("Month", "Day", "Year"), sep = "/", convert = TRUE, remove = FALSE)
-```
-
-```
-## # A tibble: 1,461 x 14
-##       X city  date     Month   Day  Year death  temp dewpoint  pm10    o3  time
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  3654 chic  1/1/1997     1     1  1997   137  36       37.5  13.1  5.66  3654
-## 2  3655 chic  1/2/1997     1     2  1997   123  45       47.2  41.9  5.53  3655
-## 3  3656 chic  1/3/1997     1     3  1997   127  40       38    27.0  6.29  3656
-## 4  3657 chic  1/4/1997     1     4  1997   146  51.5     45.5  25.1  7.54  3657
-## 5  3658 chic  1/5/1997     1     5  1997   102  27       11.2  15.3 20.8   3658
-## # ... with 1,456 more rows, and 2 more variables: season &lt;chr&gt;, year &lt;dbl&gt;
-```
-
-
----
-
-# `unite`
-
-- Can combine two columns with `unite`:
-
-
-```r
-chicagoData %&gt;% 
-  separate(date, c("Month", "Day", "Year"), sep = "/", convert = TRUE, remove = FALSE) %&gt;% 
-  unite(MonthDay, Month, Day, sep = "-")
-```
-
-```
-## # A tibble: 1,461 x 13
-##       X city  date  MonthDay  Year death  temp dewpoint  pm10    o3  time season
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
-## 1  3654 chic  1/1/~ 1-1       1997   137  36       37.5  13.1  5.66  3654 winter
-## 2  3655 chic  1/2/~ 1-2       1997   123  45       47.2  41.9  5.53  3655 winter
-## 3  3656 chic  1/3/~ 1-3       1997   127  40       38    27.0  6.29  3656 winter
-## 4  3657 chic  1/4/~ 1-4       1997   146  51.5     45.5  25.1  7.54  3657 winter
-## 5  3658 chic  1/5/~ 1-5       1997   102  27       11.2  15.3 20.8   3658 winter
-## # ... with 1,456 more rows, and 1 more variable: year &lt;dbl&gt;
-```
-
-
----
-
-# To R!
-
-Quick example 
-
-- Reshape some data with `tidyr`!
-
-
----
-
-# Recap!  
-
-- `pivot_wider()` &amp; `pivot_longer()` great for reshaping data 
-
-- `unite()` &amp; `separate()` nice for dealing with columns  
-
-- [`dplyr` and `tidyr` Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-
----
-
 # Big Recap!
 
 - `dplyr` and `tidyr` packages
@@ -24756,13 +24622,12 @@ Quick example
     + Reshape data: `pivot_wider()`, `pivot_longer()`
     
     
-    
-    
-    
+---
+
 layout: false
 class: title-slide-section-red, middle
 
-# Contingency Tables  
+# EDA: Numeric Summaries
 Justin Post
 
 ---
@@ -24770,39 +24635,6 @@ layout: true
 
 &lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
 
----
-
-# What is this course about?
-
-Basic use of R for reading, manipulating, and plotting data!
-
-&lt;div style = "float: left;border:1px solid black;"&gt;
-&lt;a href = "https://www4.stat.ncsu.edu/~online/datasets/chemical.txt"&gt;
-&lt;img src="img/rawData.png" width="205px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/a&gt;
-&lt;/div&gt;
-&lt;div style = "float: left;"&gt;
-&lt;img src="img/arrow.png" width="30px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/div&gt;
-&lt;div style = "float: left;border:1px solid black;"&gt;
-&lt;a href = "https://www4.stat.ncsu.edu/~online/datasets/readChemData.r"&gt;
-&lt;img src="img/ImportR.png" width="205px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/a&gt;
-&lt;/div&gt;
-&lt;div style = "float: left;"&gt;
-&lt;img src="img/arrow.png" width="30px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/div&gt;
-&lt;div style = "float: left;border:1px solid black;"&gt;
-&lt;a href = "https://www4.stat.ncsu.edu/~online/datasets/summChemData.r"&gt;
-&lt;img src="img/SummarizeR.png" width="205px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/a&gt;
-&lt;/div&gt;
-&lt;div style = "float: left;"&gt;
-&lt;img src="img/arrow.png" width="30px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/div&gt;
-&lt;div style = "float: left;border:1px dashed black;"&gt;
-&lt;img src="img/AnalysisR.png" width="205px" height="249px" style="display: block; margin: auto auto auto 0;" /&gt;
-&lt;/div&gt;
 
 ---
 
@@ -24897,7 +24729,7 @@ Goal: Describe the **distribution** of the variable
 
     + Describe the relative frequency (or count) for each category
 
-    + Done with contingency tables via `table()`
+    + Can be done with `group_by()` and `summarize()` from `dplyr` (easier with base R `table()`)
 
     
 ---
@@ -24930,45 +24762,122 @@ titanicData
 
 # Contingency tables 
 
-- Create **one-way contingency tables** for each of three categorical variables: 
-
-    + embarked (where journey started)  
-    + survived (survive or not)    
-    + sex (Male or Female)  
+- Create a **one-way contingency table** for the `embarked` variable and for the `survived` variable
 
 &lt;div style="float: left; width: 45%;"&gt;
 
-
 ```r
-table(titanicData$embarked)
+titanicData %&gt;%
+  group_by(embarked) %&gt;%
+  summarize(counts = n())
 ```
 
 ```
-## 
-##   C   Q   S 
-## 270 123 914
+## # A tibble: 4 x 2
+##   embarked counts
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 C           270
+## 2 Q           123
+## 3 S           914
+## 4 &lt;NA&gt;          3
 ```
 &lt;/div&gt;
-&lt;div style="float: right; width: 45%;"&gt;
+&lt;div style="float: left; width: 45%;"&gt;
 
 ```r
-table(titanicData$survived)
+titanicData %&gt;%
+  group_by(survived) %&gt;%
+  summarize(counts = n())
 ```
 
 ```
-## 
-##   0   1 
-## 809 500
+## # A tibble: 3 x 2
+##   survived counts
+##      &lt;dbl&gt;  &lt;int&gt;
+## 1        0    809
+## 2        1    500
+## 3       NA      1
 ```
+&lt;/div&gt;
+&lt;!--comment--&gt;
+
+---
+
+# Two-way contingency tables 
+
+- Create **two-way contingency tables** for pairs of categorical variables  
+
+&lt;div style="float: left; width: 35%;"&gt;
 
 ```r
-table(titanicData$sex)
+titanicData %&gt;%
+  group_by(embarked, survived) %&gt;%
+  summarize(counts = n())
 ```
 
 ```
-## 
-## female   male 
-##    466    843
+## # A tibble: 8 x 3
+## # Groups:   embarked [4]
+##   embarked survived counts
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+## 1 C               0    120
+## 2 C               1    150
+## 3 Q               0     79
+## 4 Q               1     44
+## 5 S               0    610
+## 6 S               1    304
+## 7 &lt;NA&gt;            1      2
+## 8 &lt;NA&gt;           NA      1
+```
+&lt;/div&gt;
+&lt;!--comment--&gt;
+
+
+---
+
+# Two-way contingency tables 
+
+- Create **two-way contingency tables** for pairs of categorical variables  
+
+&lt;div style="float: left; width: 35%;"&gt;
+
+```r
+titanicData %&gt;%
+  group_by(embarked, survived) %&gt;%
+  summarize(counts = n())
+```
+
+```
+## # A tibble: 8 x 3
+## # Groups:   embarked [4]
+##   embarked survived counts
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+## 1 C               0    120
+## 2 C               1    150
+## 3 Q               0     79
+## 4 Q               1     44
+## 5 S               0    610
+## 6 S               1    304
+## 7 &lt;NA&gt;            1      2
+## 8 &lt;NA&gt;           NA      1
+```
+&lt;/div&gt;
+&lt;div style="float: right; width: 60%;"&gt;
+
+```r
+titanicData %&gt;%
+  group_by(embarked, survived) %&gt;%
+  summarize(counts = n()) %&gt;%
+  pivot_wider(values_from = counts, names_from = embarked)
+```
+
+```
+## # A tibble: 3 x 5
+##   survived     C     Q     S  `NA`
+##      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1        0   120    79   610    NA
+## 2        1   150    44   304     2
+## 3       NA    NA    NA    NA     1
 ```
 &lt;/div&gt;
 &lt;!--Comment--&gt;
@@ -24977,232 +24886,52 @@ table(titanicData$sex)
 
 # Two-way contingency tables 
 
-- Create **two-way contingency tables** for pairs of categorical variables  
+- Let's drop the `NA` values first
 
-&lt;div style="float: left; width: 45%;"&gt;
+&lt;div style="float: left; width: 35%;"&gt;
 
 ```r
-table(titanicData$survived,
-      titanicData$sex)
+titanicData %&gt;% 
+  drop_na(embarked, survived) %&gt;%
+  group_by(embarked, survived) %&gt;%
+  summarize(counts = n())
 ```
 
 ```
-##    
-##     female male
-##   0    127  682
-##   1    339  161
+## # A tibble: 6 x 3
+## # Groups:   embarked [3]
+##   embarked survived counts
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+## 1 C               0    120
+## 2 C               1    150
+## 3 Q               0     79
+## 4 Q               1     44
+## 5 S               0    610
+## 6 S               1    304
 ```
 &lt;/div&gt;
-&lt;div style="float: right; width: 45%;"&gt;
+&lt;div style="float: right; width: 60%;"&gt;
 
 ```r
-table(titanicData$survived,
-      titanicData$embarked)
+titanicData %&gt;%
+  drop_na(embarked, survived) %&gt;%
+  group_by(embarked, survived) %&gt;%
+  summarize(counts = n()) %&gt;%
+  pivot_wider(values_from = counts, names_from = embarked)
 ```
 
 ```
-##    
-##       C   Q   S
-##   0 120  79 610
-##   1 150  44 304
-```
-
-```r
-table(titanicData$sex,
-      titanicData$embarked)
-```
-
-```
-##         
-##            C   Q   S
-##   female 113  60 291
-##   male   157  63 623
+## # A tibble: 2 x 4
+##   survived     C     Q     S
+##      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1        0   120    79   610
+## 2        1   150    44   304
 ```
 &lt;/div&gt;
 &lt;!--Comment--&gt;
 
----
-
-# Three-way contingency tables 
-
-- Create a **three-way contingency table** for three categorical variables 
-
-
-```r
-table(titanicData$sex, titanicData$embarked, titanicData$survived)
-```
-
-```
-## , ,  = 0
-## 
-##         
-##            C   Q   S
-##   female  11  23  93
-##   male   109  56 517
-## 
-## , ,  = 1
-## 
-##         
-##            C   Q   S
-##   female 102  37 198
-##   male    48   7 106
-```
-
 
 ---
-
-# Three-way contingency tables 
-
-- Create a **three-way contingency table** for three categorical variables (order matters for output!)
-
-
-```r
-tab &lt;- table(titanicData$sex, titanicData$embarked, titanicData$survived)
-
-str(tab)
-```
-
-```
-##  'table' int [1:2, 1:3, 1:2] 11 109 23 56 93 517 102 48 37 7 ...
-##  - attr(*, "dimnames")=List of 3
-##   ..$ : chr [1:2] "female" "male"
-##   ..$ : chr [1:3] "C" "Q" "S"
-##   ..$ : chr [1:2] "0" "1"
-```
-
-- An object with three dimension! `[ , , ]`
-
-
----
-
-# Conditional contingency tables
-
-- Can obtain **conditional** bivariate info!
-
-
-```
-##  'table' int [1:2, 1:3, 1:2] 11 109 23 56 93 517 102 48 37 7 ...
-##  - attr(*, "dimnames")=List of 3
-##   ..$ : chr [1:2] "female" "male"
-##   ..$ : chr [1:3] "C" "Q" "S"
-##   ..$ : chr [1:2] "0" "1"
-```
-
-- Returns the embarked vs survived table for females
-
-
-```r
-tab[1, , ]
-```
-
-```
-##    
-##       0   1
-##   C  11 102
-##   Q  23  37
-##   S  93 198
-```
-
-
-
----
-
-# Conditional contingency tables
-
-- Can obtain **conditional** bivariate info!
-
-
-```
-##  'table' int [1:2, 1:3, 1:2] 11 109 23 56 93 517 102 48 37 7 ...
-##  - attr(*, "dimnames")=List of 3
-##   ..$ : chr [1:2] "female" "male"
-##   ..$ : chr [1:3] "C" "Q" "S"
-##   ..$ : chr [1:2] "0" "1"
-```
-
-- Returns the embarked vs survived table for males
-
-
-```r
-tab[2, , ]
-```
-
-```
-##    
-##       0   1
-##   C 109  48
-##   Q  56   7
-##   S 517 106
-```
-
-
----
-
-# Conditional contingency tables
-
-- Can obtain **conditional** univariate info too!
-
-
-
-```
-##  'table' int [1:2, 1:3, 1:2] 11 109 23 56 93 517 102 48 37 7 ...
-##  - attr(*, "dimnames")=List of 3
-##   ..$ : chr [1:2] "female" "male"
-##   ..$ : chr [1:3] "C" "Q" "S"
-##   ..$ : chr [1:2] "0" "1"
-```
-
-- Return the survived table for males that embarked at "Q"
-
-
-```r
-tab[2, 2, ]
-```
-
-```
-##  0  1 
-## 56  7
-```
-
-
----
-
-# To R!
-
-Quick example 
-
-- Summarizing categorical data!
-
-
----
-
-# Recap!
-
-- Must understand the type of data you have
-
-- Goal: Describe the distribution
-
-- Numerical summaries
-
-    + Contingency Tables: `table()`  
-
-    + Subset to obtain conditional tables   
-
----
-
-layout: false
-class: title-slide-section-red, middle
-
-# Summarizing Center &amp; Spread 
-Justin Post
-
----
-layout: true
-
-&lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
-
----
-
 
 # Numeric Data
 
@@ -25230,31 +24959,13 @@ For a single numeric variable, describe the distribution via
 
 + Measures of spread: Variance, Standard Deviation, Quartiles, IQR, ...
 
-
----
-
-# Numeric Data
-
-Goal: Describe the **distribution** of the variable  
-
-- Distribution = pattern and frequency with which you observe a variable  
-
-- Numeric variable - entries are a numerical value where math can be performed
-
-For two numeric variables, describe the distribution via 
-
-+ Shape: Scatter plot, ...
-
-+ Measures of linear relationship: Covariance, Correlation, ...   
-
-
 ---
 
 # Measures of Center
 
 Mean &amp; Median
 
-&lt;div style="float: left; width: 40%;"&gt;
+&lt;div style="float: left; width: 48%;"&gt;
 
 ```r
 mean(titanicData$fare, na.rm = TRUE)
@@ -25271,8 +24982,21 @@ median(titanicData$fare, na.rm = TRUE)
 ```
 ## [1] 14.4542
 ```
+
+```r
+titanicData %&gt;% 
+  summarize(fareMean = mean(fare, na.rm = TRUE), 
+            fareMedian = median(fare, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1 x 2
+##   fareMean fareMedian
+##      &lt;dbl&gt;      &lt;dbl&gt;
+## 1     33.3       14.5
+```
 &lt;/div&gt;
-&lt;div style="float: right; width: 55%;"&gt;
+&lt;div style="float: right; width: 48%;"&gt;
 
 ```r
 mean(titanicData$age, na.rm = TRUE)
@@ -25289,96 +25013,91 @@ median(titanicData$age, na.rm = TRUE)
 ```
 ## [1] 28
 ```
+
+```r
+titanicData %&gt;% 
+  summarize(ageMean = mean(age, na.rm = TRUE), 
+            ageMedian = median(age, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1 x 2
+##   ageMean ageMedian
+##     &lt;dbl&gt;     &lt;dbl&gt;
+## 1    29.9        28
+```
 &lt;/div&gt;
 &lt;!--Comment--&gt;
+
 ---
 
 # Measures of Spread
 
-Variance, Standard Deviation, Quartiles, &amp; IQR
+Standard Deviation, Quantiles, &amp; IQR
 
 
 ```r
-summary(titanicData$fare)
+titanicData %&gt;% 
+  summarize(fareMean = mean(fare, na.rm = TRUE), 
+            fareMedian = median(fare, na.rm = TRUE),
+            fareSD = sd(fare, na.rm = TRUE),
+            fareIQR = IQR(fare, na.rm = TRUE),
+            fareQ1 = quantile(fare, probs = c(0.25), na.rm = TRUE))
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##   0.000   7.896  14.454  33.295  31.275 512.329       2
+## # A tibble: 1 x 5
+##   fareMean fareMedian fareSD fareIQR fareQ1
+##      &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1     33.3       14.5   51.8    23.4   7.90
 ```
 
-&lt;div style="float: left; width: 40%;"&gt;
 
-```r
-var(titanicData$fare, na.rm = TRUE)
-```
+---
 
-```
-## [1] 2678.96
-```
+# Measures of Spread
 
-```r
-sd(titanicData$fare, na.rm = TRUE)
-```
+Standard Deviation, Quantiles, &amp; IQR
 
-```
-## [1] 51.75867
-```
-&lt;/div&gt;
-&lt;div style="float: right; width: 55%;"&gt;
 
 ```r
-IQR(titanicData$fare, na.rm = TRUE)
+titanicData %&gt;% 
+  summarize(fareQuantiles = quantile(fare, probs = c(0.1, 0.25, 0.5, 0.75, 0.9), na.rm = TRUE),
+            q = c(0.1, 0.25, 0.5, 0.75, 0.9))
 ```
 
 ```
-## [1] 23.3792
+## # A tibble: 5 x 2
+##   fareQuantiles     q
+##           &lt;dbl&gt; &lt;dbl&gt;
+## 1          7.57  0.1 
+## 2          7.90  0.25
+## 3         14.5   0.5 
+## 4         31.3   0.75
+## 5         78.1   0.9
 ```
-
-```r
-quantile(titanicData$fare, probs = c(0.1, 0.2), na.rm = TRUE)
-```
-
-```
-##    10%    20% 
-## 7.5675 7.8542
-```
-&lt;/div&gt;
-&lt;!--Comment--&gt;
 
 
 ---
 
 # Measures of Linear Relationship
 
-Covariance &amp; Correlation   
+For two numeric variables we can find Covariance &amp; Correlation   
 
 
 ```r
-cov(titanicData$fare, titanicData$age, use = "complete.obs")
+titanicData %&gt;% 
+  summarize(covar = cov(fare, age, use = "complete.obs"),
+            corr = cor(fare, age, use = "complete.obs"))
 ```
 
 ```
-## [1] 143.3394
+## # A tibble: 1 x 2
+##   covar  corr
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1  143. 0.179
 ```
 
-```r
-cor(titanicData$fare, titanicData$age, use = "complete.obs")
-```
-
-```
-## [1] 0.1787393
-```
-
-
-
----
-
-# Summaries Across Groups
-
-Usually want summaries for different **subgroups of data** 
-
-- Ex: Get similar fare summaries for each *survival status*
 
 
 ---
@@ -25429,7 +25148,7 @@ titanicData %&gt;%
 
 ```r
 titanicData %&gt;% 
-  tidyr::drop_na(survived) %&gt;%
+  drop_na(survived) %&gt;%
   group_by(survived) %&gt;% 
 	summarise(avg = mean(fare, na.rm = TRUE), 
 	          med = median(fare, na.rm = TRUE), 
@@ -25454,7 +25173,7 @@ titanicData %&gt;%
 
 ```r
 titanicData %&gt;% 
-  tidyr::drop_na(survived, embarked) %&gt;%
+  drop_na(survived, embarked) %&gt;%
   group_by(survived, embarked) %&gt;% 
 	summarise(avg = mean(fare, na.rm = TRUE), 
 	          med = median(fare, na.rm = TRUE), 
@@ -25485,7 +25204,7 @@ titanicData %&gt;%
 
 ```r
 titanicData %&gt;% 
-  tidyr::drop_na(survived) %&gt;%
+  drop_na(survived) %&gt;%
   group_by(survived) %&gt;% 
 	summarise(across(.fns = mean, .cols = c(age, fare), na.rm = TRUE))
 ```
@@ -25507,7 +25226,7 @@ titanicData %&gt;%
 
 ```r
 titanicData %&gt;% 
-  tidyr::drop_na(survived) %&gt;%
+  drop_na(survived) %&gt;%
   group_by(survived) %&gt;% 
 	summarise(across(.fns = mean, .cols = where(is.double), na.rm = TRUE))
 ```
@@ -25537,14 +25256,15 @@ Quick example
 
 - Goal: Describe the distribution
 
-- Numerical summaries
+- Numerical summaries: use `summarize()`
 
-    + Contingency Tables: `table()`  
+    + Contingency Tables: `n()`  
     + Mean/Median: `mean()`, `median()`
     + Standard Deviation/Variance/IQR: `sd()`, `var()`, `IQR()` 
     + Quantiles/Percentiles: `quantile()`
 
-- Across subgroups with `dplyr::group_by()`, `dplyr::summarize()`, and `dplyr::across()`
+- Across subgroups with `dplyr::group_by()`, 
+- Multiple columns/functions with `dplyr::across()`
 
 
 ---
@@ -25552,36 +25272,13 @@ Quick example
 layout: false
 class: title-slide-section-red, middle
 
-# `ggplot2` Concepts &amp; Barplots
+# `ggplot2` 
 Justin Post
 
 ---
 layout: true
 
 &lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
-
----
-
-
-# Making Sense of Data
-
-- Understand types of data and their distributions  
-
-- Numerical summaries (across subgroups)  
-
-    + Contingency Tables  
-    + Mean/Median  
-    + Standard Deviation/Variance/IQR
-    + Quantiles/Percentiles
-
-- Graphical summaries (across subgroups)  
-
-    + Bar plots (categorical data)   
-    + Histograms  
-    + Box plots  
-    + Scatter plots
-    
-
 
 ---
 
@@ -25646,7 +25343,7 @@ ggplot2 basics ([Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/
 ggplot(data = titanicData, aes(x = survived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-147-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-135-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25662,7 +25359,7 @@ ggplot(data = titanicData, aes(x = survived))
 ggplot(data = titanicData, aes(x = survived)) + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-148-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-136-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25678,7 +25375,7 @@ g &lt;- ggplot(data = titanicData, aes(x = survived))
 g + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-149-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-137-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25688,7 +25385,7 @@ g + geom_bar()
 
 - `survived` data values create a sub-optimal plot!
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-150-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-138-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 - Can fix with additional layers but it is easier to change the variable used for plotting!
 
@@ -25735,20 +25432,6 @@ Factor - special class of vector with a `levels` attribute
 
 # Factors
 
-Factor - special class of vector with a `levels` attribute  
-
-- Levels define all possible values for that variable  
-
-    + Great for variable like `Day` (Monday, Tuesday, ..., Sunday)  
-    + Not great for variable like `Name` where new values may come up  
-
-- Great for plotting as you can order the levels and give nicer labels
-
-
----
-
-# Factors
-
 - Create a new `factor` version of `survived`
 
 
@@ -25769,48 +25452,6 @@ levels(titanicData$mySurvived)
 ## [1] "0" "1"
 ```
 
-
----
-
-# Factors
-
-- Create a new `factor` version of `survived`
-
-
-```r
-titanicData &lt;- titanicData %&gt;% mutate(mySurvived = as.factor(survived))
-str(titanicData$mySurvived)
-```
-
-```
-##  Factor w/ 2 levels "0","1": 2 2 1 1 1 2 2 1 2 1 ...
-```
-
-```r
-levels(titanicData$mySurvived) 
-```
-
-```
-## [1] "0" "1"
-```
-
-- Can't add value unless it is a level
-
-
-```r
-titanicData$mySurvived[1] &lt;- "5"
-```
-
-```
-## Warning in `[&lt;-.factor`(`*tmp*`, 1, value = structure(c(NA, 2L, 1L, 1L, :
-## invalid factor level, NA generated
-```
-
-
----
-
-# Factor Levels
-
 - Useful if you want to create better labels (or change the ordering)  
 
 
@@ -25822,55 +25463,6 @@ levels(titanicData$mySurvived)
 ```
 ## [1] "Died"     "Survived"
 ```
-
-```r
-table(titanicData$mySurvived)
-```
-
-```
-## 
-##     Died Survived 
-##      809      499
-```
-
----
-
-# Factor Levels
-
-- Useful if you want to create better labels (or change the ordering)  
-
-
-```r
-levels(titanicData$mySurvived) &lt;- c("Died", "Survived")
-levels(titanicData$mySurvived)
-```
-
-```
-## [1] "Died"     "Survived"
-```
-
-```r
-table(titanicData$mySurvived)
-```
-
-```
-## 
-##     Died Survived 
-##      809      499
-```
-
-
-```r
-titanicData &lt;- titanicData %&gt;% mutate(mySurvived = factor(mySurvived, levels = c("Survived", "Died")))
-table(titanicData$mySurvived)
-```
-
-```
-## 
-## Survived     Died 
-##      499      809
-```
-
 
 ---
 
@@ -25904,7 +25496,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived))
 g + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-159-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-143-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25952,7 +25544,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = myEmbarked))
 g + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-160-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-144-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26009,7 +25601,7 @@ g + geom_bar(aes(x = mySurvived, fill = myEmbarked)) +
        fill = "Embarked")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-164-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-148-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26027,78 +25619,7 @@ g + geom_bar(aes(x = mySurvived, fill = myEmbarked)) +
   coord_flip()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-165-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
-
-
-
----
-
-# `ggplot2` Stat vs Geom layers  
-
-Note: Most `geom`s have a corresponding `stat` layer that can be used  
-
-`geom_bar(mapping = NULL, data = NULL, stat = "count",`  
-`position = "stack", ..., width = NULL, binwidth = NULL, na.rm = FALSE,`  
-`show.legend = NA, inherit.aes = TRUE)`  
-
----
-
-# `ggplot2` Stat vs Geom layers  
-
-Note: Most `geom`s have a corresponding `stat` layer that can be used  
-
-`geom_bar(mapping = NULL, data = NULL, stat = "count",`  
-`position = "stack", ..., width = NULL, binwidth = NULL, na.rm = FALSE,`  
-`show.legend = NA, inherit.aes = TRUE)`  
-  
-- Equivalent plots via:
-
-
-```r
-ggplot(data = titanicData, aes(x = survived, fill = sex)) + geom_bar()
-ggplot(data = titanicData, aes(x = survived, fill = sex)) + stat_count()
-```
-
-
----
-
-# `ggplot2` Stat vs Geom layers  
-
-- Can modify the stat: if you have summary data, specify `y` and use `stat = identity`  
-  
-
-```r
-sumData &lt;- titanicData %&gt;% 
-  group_by(survived, sex) %&gt;% 
-  summarize(count = n())
-sumData
-```
-
-```
-## # A tibble: 4 x 3
-## # Groups:   survived [2]
-##   survived sex    count
-##      &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;
-## 1        0 female   127
-## 2        0 male     682
-## 3        1 female   336
-## 4        1 male     161
-```
-
-
----
-
-# `ggplot2` Stat vs Geom layers  
-
-- Can modify the stat: if you have summary data, specify `y` and use `stat = identity`  
-  
-
-```r
-g &lt;- ggplot(sumData) 
-g + geom_bar(stat = "identity", aes(x = survived, y = count, fill = sex))
-```
-
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-168-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-149-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26126,7 +25647,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = sex))
 g + geom_bar(position = "dodge")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-169-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-150-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26141,13 +25662,8 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = sex))
 g + geom_bar(position = "fill")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-170-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-151-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
----
-
-# To R!
-
-- Create and customize barplots!
 
 ---
 
@@ -26157,39 +25673,13 @@ General `ggplot2` things:
 
 - Create base plot with `ggplot()`
 
-- Add `geom` or `stat` layer  
+- Add `geom` layer 
 
 - Can set local or global `aes()` (mappings of variables to attributes of the plot)
 
 - Modify titles, labels, etc. by adding more layers
 
 - `position` argument can change style of plot  
-
- 
----
-
-layout: false
-class: title-slide-section-red, middle
-
-# `ggplot2` Smoothed Histograms, Boxplots, &amp; Scatter Plots  
-Justin Post
-
----
-layout: true
-
-&lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
-
----
-
-# `ggplot2`
-
-Numeric variables - generally, describe distribution via a histogram or boxplot!  
-
-To create plots use the same process:
-    
-- Create base object  
-- Add `geom` or `stat` layers  
-- Use `aes()` to map variables to attributes of the plot
 
 
 ---
@@ -26219,7 +25709,7 @@ g &lt;- ggplot(titanicData, aes(x = age))
 g + geom_density()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-171-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-152-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26237,7 +25727,7 @@ g &lt;- ggplot(titanicData, aes(x = age))
 g + geom_density(adjust = 0.5, alpha = 0.5, aes(fill = mySurvived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-172-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-153-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26255,7 +25745,7 @@ g &lt;- ggplot(titanicData, aes(x = age))
 g + geom_density(adjust = 0.5, alpha = 0.5, position = "stack", aes(fill = mySurvived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-173-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-154-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26283,7 +25773,7 @@ g &lt;- ggplot(titanicData, aes(x = mySurvived, y = age))
 g + geom_boxplot(fill = "grey")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-174-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-155-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26300,7 +25790,7 @@ g + geom_boxplot(fill = "grey") +
     geom_jitter(width = 0.1, alpha = 0.3)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-175-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-156-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26316,7 +25806,7 @@ g + geom_jitter(width = 0.1, alpha = 0.3) +
     geom_boxplot(fill = "grey")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-176-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-157-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26332,7 +25822,7 @@ g &lt;- ggplot(titanicData, aes(x = mySurvived, y = age))
 g + geom_violin(fill = "grey") 
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-177-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-158-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -26365,7 +25855,7 @@ g &lt;- ggplot(titanicData, aes(x = age, y = fare))
 g + geom_point()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-178-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-159-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26382,59 +25872,8 @@ g + geom_point() +
     geom_smooth(method = lm) 
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-179-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-160-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
-
-
----
-
-# `ggplot2` Scatter Plots with Text
-
-- May want to add value of correlation to plot  
-
-- `paste()` or `paste0()` handy
-
-
-```r
-paste("Hi", "What", "Is", "Going", "On", "?", sep = " ")
-```
-
-```
-## [1] "Hi What Is Going On ?"
-```
-
-```r
-paste("Hi", "What", "Is", "Going", "On", "?", sep = ".")
-```
-
-```
-## [1] "Hi.What.Is.Going.On.?"
-```
-
-```r
-paste0("Hi", "What", "Is", "Going", "On", "?")
-```
-
-```
-## [1] "HiWhatIsGoingOn?"
-```
-
-
----
-
-# `ggplot2` Scatter Plots with Text
-
-
-```r
-correlation &lt;- cor(titanicData$fare, titanicData$age, use = "complete.obs")
-g &lt;- ggplot(titanicData, aes(x = age, y = fare))
-g + geom_point() +
-    geom_smooth(method = lm, col = "Red") + 
-    geom_text(x = 40, y = 400, size = 6, 
-              label = paste0("Correlation = ", round(correlation, 2)))
-```
-
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-181-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26449,44 +25888,8 @@ g &lt;- ggplot(titanicData, aes(x = age, y = fare))
 g + geom_text(aes(label = survived, color = mySurvived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-182-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-161-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
-
-
----
-
-# To R!
-
-- Create and customize density plots, boxplots, and scatter plots!
-
----
-
-# Recap!
-
-General `ggplot2` things:
-
-- Create base plot with `ggplot()`
-
-- Add `geom` or `stat` layer  
-
-- Can set local or global `aes()` (mappings of variables to attributes of the plot)
-
-- Modify titles, labels, etc. by adding more layers
-
-
- 
----
-
-layout: false
-class: title-slide-section-red, middle
-
-# `ggplot2` Faceting, Themes, and More  
-Justin Post
-
----
-layout: true
-
-&lt;div class="my-footer"&gt;&lt;img src="img/logo.png" style="height: 60px;"/&gt;&lt;/div&gt; 
 
 ---
 
@@ -26502,7 +25905,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = sex))
 g + geom_bar(position = "dodge")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-183-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-162-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26547,7 +25950,7 @@ g + geom_bar(position = "dodge") +
     facet_wrap(~ myEmbarked)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-184-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-163-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26565,7 +25968,7 @@ g + geom_boxplot(fill = "grey") +
     facet_wrap(~ myEmbarked)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-185-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-164-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -26582,7 +25985,7 @@ g + geom_point(aes(color = sex), size = 2.5) +
     facet_wrap(~ myEmbarked)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-186-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-165-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26599,7 +26002,7 @@ g + geom_point(aes(color = sex), size = 2.5) +
     theme_light()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-187-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-166-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -26615,7 +26018,7 @@ g + geom_point(aes(color = sex), size = 2.5) +
     theme_dark()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-188-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-167-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -26631,7 +26034,7 @@ library(GGally) #install if needed
 ggpairs(titanicData, aes(colour = sex, alpha = 0.4), columns = c("age", "fare", "mySurvived"))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-189-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-168-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -26701,26 +26104,6 @@ General `ggplot2` things:
 
 - `esquisse` is a [great package for exploring ggplot2](https://cran.r-project.org/web/packages/esquisse/vignettes/get-started.html)!
 
-
----
-
-# Big Recap!
-
-Goal: Understand types of data and their distributions  
-
-- Numerical summaries (across subgroups)  
-
-    + Contingency Tables  
-    + Mean/Median  
-    + Standard Deviation/Variance/IQR
-    + Quantiles/Percentiles
-
-- Graphical summaries (across subgroups)  
-
-    + Bar plots  
-    + Histograms  
-    + Box plots  
-    + Scatter plots
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
