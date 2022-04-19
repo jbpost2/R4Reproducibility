@@ -623,6 +623,27 @@ Global chunk options:
 Ex: `opts_chunk$set(echo = FALSE, eval = TRUE, warning = FALSE)`
 
 
+
+---
+
+# Code Chunks
+  
+
+```r
+knitr::include_graphics("img/chunk.png")
+```
+
+Using chunks is generally the best way to include an image.  
+
+Code chunk options often used
+
+- `fig.align = 'center'`
+
+- `out.width = "500px"`
+
+- `echo = FALSE`
+
+
 ---
 
 # Inline R Code
@@ -25343,7 +25364,7 @@ ggplot2 basics ([Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/
 ggplot(data = titanicData, aes(x = survived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-135-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-136-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25359,7 +25380,7 @@ ggplot(data = titanicData, aes(x = survived))
 ggplot(data = titanicData, aes(x = survived)) + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-136-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-137-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25375,7 +25396,7 @@ g &lt;- ggplot(data = titanicData, aes(x = survived))
 g + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-137-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-138-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25385,7 +25406,7 @@ g + geom_bar()
 
 - `survived` data values create a sub-optimal plot!
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-138-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-139-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 - Can fix with additional layers but it is easier to change the variable used for plotting!
 
@@ -25496,7 +25517,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived))
 g + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-143-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-144-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25544,7 +25565,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = myEmbarked))
 g + geom_bar()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-144-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-145-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25601,7 +25622,7 @@ g + geom_bar(aes(x = mySurvived, fill = myEmbarked)) +
        fill = "Embarked")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-148-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-149-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25619,7 +25640,7 @@ g + geom_bar(aes(x = mySurvived, fill = myEmbarked)) +
   coord_flip()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-149-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-150-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25647,7 +25668,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = sex))
 g + geom_bar(position = "dodge")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-150-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-151-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25662,7 +25683,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = sex))
 g + geom_bar(position = "fill")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-151-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-152-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25709,7 +25730,7 @@ g &lt;- ggplot(titanicData, aes(x = age))
 g + geom_density()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-152-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-153-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25727,7 +25748,7 @@ g &lt;- ggplot(titanicData, aes(x = age))
 g + geom_density(adjust = 0.5, alpha = 0.5, aes(fill = mySurvived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-153-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-154-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25745,7 +25766,7 @@ g &lt;- ggplot(titanicData, aes(x = age))
 g + geom_density(adjust = 0.5, alpha = 0.5, position = "stack", aes(fill = mySurvived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-154-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-155-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25773,7 +25794,7 @@ g &lt;- ggplot(titanicData, aes(x = mySurvived, y = age))
 g + geom_boxplot(fill = "grey")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-155-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-156-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25790,7 +25811,7 @@ g + geom_boxplot(fill = "grey") +
     geom_jitter(width = 0.1, alpha = 0.3)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-156-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-157-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25806,7 +25827,7 @@ g + geom_jitter(width = 0.1, alpha = 0.3) +
     geom_boxplot(fill = "grey")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-157-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-158-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25822,7 +25843,7 @@ g &lt;- ggplot(titanicData, aes(x = mySurvived, y = age))
 g + geom_violin(fill = "grey") 
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-158-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-159-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -25855,7 +25876,7 @@ g &lt;- ggplot(titanicData, aes(x = age, y = fare))
 g + geom_point()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-159-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-160-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25872,7 +25893,7 @@ g + geom_point() +
     geom_smooth(method = lm) 
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-160-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-161-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25888,7 +25909,7 @@ g &lt;- ggplot(titanicData, aes(x = age, y = fare))
 g + geom_text(aes(label = survived, color = mySurvived))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-161-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-162-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -25905,7 +25926,7 @@ g &lt;- ggplot(data = titanicData, aes(x = mySurvived, fill = sex))
 g + geom_bar(position = "dodge")
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-162-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-163-1.svg" width="650px" height="320px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25950,7 +25971,7 @@ g + geom_bar(position = "dodge") +
     facet_wrap(~ myEmbarked)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-163-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-164-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25968,7 +25989,7 @@ g + geom_boxplot(fill = "grey") +
     facet_wrap(~ myEmbarked)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-164-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-165-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -25985,7 +26006,7 @@ g + geom_point(aes(color = sex), size = 2.5) +
     facet_wrap(~ myEmbarked)
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-165-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-166-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -26002,7 +26023,7 @@ g + geom_point(aes(color = sex), size = 2.5) +
     theme_light()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-166-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-167-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -26018,7 +26039,7 @@ g + geom_point(aes(color = sex), size = 2.5) +
     theme_dark()
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-167-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-168-1.svg" width="650px" height="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -26034,7 +26055,7 @@ library(GGally) #install if needed
 ggpairs(titanicData, aes(colour = sex, alpha = 0.4), columns = c("age", "fare", "mySurvived"))
 ```
 
-&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-168-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
+&lt;img src="R4Reproducibility_files/figure-html/unnamed-chunk-169-1.svg" width="650px" height="300px" style="display: block; margin: auto;" /&gt;
 
 ---
 

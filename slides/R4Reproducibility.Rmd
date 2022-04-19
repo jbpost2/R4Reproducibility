@@ -631,6 +631,26 @@ Global chunk options:
 Ex: `opts_chunk$set(echo = FALSE, eval = TRUE, warning = FALSE)`
 
 
+
+---
+
+# Code Chunks
+  
+```{r, echo = TRUE, eval = FALSE}
+knitr::include_graphics("img/chunk.png")
+```
+
+Using chunks is generally the best way to include an image.  
+
+Code chunk options often used
+
+- `fig.align = 'center'`
+
+- `out.width = "500px"`
+
+- `echo = FALSE`
+
+
 ---
 
 # Inline R Code
