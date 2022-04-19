@@ -1,0 +1,142 @@
+---
+title: "Quick Introduction to R, R Markdown, & the `tidyverse`"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+opts_chunk$set(echo = TRUE, 
+               warning = FALSE, 
+               message = FALSE, 
+               fig.align = 'center', 
+               out.width="440px", 
+               eval = TRUE)
+```
+
+## Introduction to the Data
+
+```{r, out.width="400px", echo = FALSE}
+knitr::include_graphics("img/HorseShoeCrab.jpg")
+```
+
+> “Horseshoe crabs arrive on the beach in pairs and spawn ... during ... high tides. Unattached males also come to the beach, crowd around the nesting couples and compete with attached males for fertilizations. Satellite males form large groups around some couples while ignoring others, resulting in a nonrandom distribution that cannot be explained by local environmental conditions or habitat selection.” (Brockmann, H. J. (1996) Satellite Male Groups in Horseshoe Crabs, Limulus polyphemus, Ethology, 102, 1–21. )  
+
+About the data:   
+
+- 173 mating female crabs
+- y: whether the female crab has a “satellite” — male crab that group around the female and may fertilize her eggs
+- satell: number of satellites
+- color: female crab’s color (2 = "light", 3 = "medium", 4 = "dark", and 5 = "darker")
+- spine: spine condition (1 = “both good”, 2 = “one worn or broken”, and 3 = “both worn or broken”) 
+- weight: female crab weight (g)
+- width: female carapace width (cm) 
+
+We read in the data using the `read_delim()` function from the `readr` package (part of the `tidyverse`).  The data is tab delimited.  `readr` reads the data and stores it as a `tibble`.  `tibble`s are special `data frames` - 2D data sets where rows represent observations and columns represent variables, *usually*.
+
+```{r}
+crabData <- read_tsv("https://www4.stat.ncsu.edu/~online/datasets/crabs.txt")
+crabData
+```
+
+
+
+
+## Manipulate data
+
+The categorical data in numeric form is a bit hard to read and interpret.  We can convert that data to `factor` vectors in R.  `factor` vectors represent categorical data and have a `level` attribute that describes the set of all values that vector can take on.
+
+To explicitly coerce the data to factors we can use the `as.factor()` functions and set the `levels()` attribute.  `c()` allows us to construct a vector of values to use.
+
+```{r}
+crabData$color <- as.factor(crabData$color)
+levels(crabData$color) <- c("light", "medium", "dark", "darker")
+crabData$spine <- as.factor(crabData$spine)
+levels(crabData$spine) <- c("Both Good", "One Worn/Broken", "Both Worn/Broken")
+crabData$y <- as.factor(crabData$y)
+levels(crabData$y) <- c("No Satellite", "At least 1 Sattelite")
+```
+
+We can get a better looking table printed out using the `DT` package or via `kable()` from the `knitr` package.
+
+```{r}
+kable(crabData[1:5,])
+```
+
+We can easily **filter** or remove rows from a tibble using the `filter()` function from `dplyr`.
+
+```{r}
+crabSubData <- crabData %>%
+  filter(width < 30)
+```
+
+## Summarize the Data
+
+### Contingency Tables
+
+We'll consider three categorical variables from the data set: female color, spine condition, and whether or not a satellite was present.  We can easily summarize the categorical variables using functions from `dplyr`.
+
+```{r warning = FALSE, message = FALSE}
+colSpCounts <- crabSubData %>% 
+  group_by(color, spine) %>% 
+  summarize(counts = n())
+kable(colSpCounts)
+```
+
+We can pivot this to look more like a standard contingency table using the `tidyr` package.
+
+```{r}
+colSpCounts %>% 
+  pivot_wider(names_from = spine, values_from = counts) %>%
+  kable(caption = "Color and Spine condition information")
+```
+
+
+\newpage
+
+### Plots 
+
+The `ggplot2` package is a famous package for easily making publication ready plots.  It works by adding layers to a base plotting object.  We can create a side-by-side bar plot to represent the two-way table above.
+
+```{r}
+ggplot(crabSubData, aes(x = spine)) + 
+  geom_bar(aes(fill = color), position = "dodge") + 
+  xlab("Female Crab Spine Condition") + 
+  scale_fill_discrete("Female Crab Color")
+```
+
+\newpage
+
+`ggplot2` has faceting functionality which allows for easy creation of a plot over a third (categorical) variable.
+
+```{r}
+ggplot(crabSubData, aes(x = spine)) + 
+  geom_bar(aes(fill = color), position = "dodge") + 
+  xlab("Female Crab Spine Condition") + 
+  scale_fill_discrete("Female Crab Color") + 
+  facet_wrap( ~ y, labeller = label_both) +
+  theme(axis.text.x = element_text(angle = 20))
+```
+
+\newpage
+
+It is also very easy to create plots with trend lines, error bars, and more!
+
+```{r}
+ggplot(crabSubData, aes(x = weight, y = width, color = y), size = 2) +  
+  geom_point() +     
+  geom_smooth(method = 'lm') + 
+  ggtitle("Weight vs Width")
+```
+
+\newpage
+
+A nice general look at the data can be created using the `ggpairs()` function from the `GGally` package.
+
+```{r}
+GGally::ggpairs(crabSubData) +
+    theme(axis.text.x = element_text(angle = 20))
+```
+
