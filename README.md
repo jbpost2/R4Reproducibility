@@ -9,7 +9,7 @@ R is one of the major platforms for doing statistical analysis and research.  Th
 ## Packages Required
 
 ```
-package_list <- c("tidyverse", "GGally", "Lahman", "tinytex")
+package_list <- c("tidyverse", "GGally", "Lahman", "tinytex", "fivethirtyeight", "haven", "readxl", "DBI")
 new_packages <- package_list[!(package_list %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
 ```
