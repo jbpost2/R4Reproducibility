@@ -105,13 +105,13 @@ Note: You also have access to the source material at the [github repo](https://g
 ```
 #### Exercise Sets
 
-- <a href = "https://jbpost2.github.io/R4Reproducibility/slides/QuickIntroMarkdown"> Opening Example</a> (<a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/slides/QuickIntroMarkdown.Rmd">`.Rmd` Source</a>)
-- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/Markdown.txt"> Markdown Exercise</a>
-- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/RData.txt"> R Data Exercise</a>
-- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ReadingData.txt"> Reading Data Exercise</a>
-- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ManipulatingData.txt"> Manipulating Data Exercise</a>
-- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/SummarizingData.txt"> Summarizing Data Exercise</a>
-- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/PlottingData.txt"> Plotting Data Exercise</a>
+- <a href = "https://jbpost2.github.io/R4Reproducibility/slides/QuickIntroMarkdown" target = "_blank"> Opening Example</a> (<a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/slides/QuickIntroMarkdown.Rmd" target = "_blank">`.Rmd` Source</a>)
+- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/Markdown.txt" target = "_blank"> Markdown Exercise</a>
+- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/RData.txt" target = "_blank"> R Data Exercise</a>
+- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ReadingData.txt" target = "_blank"> Reading Data Exercise</a>
+- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ManipulatingData.txt" target = "_blank"> Manipulating Data Exercise</a>
+- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/SummarizingData.txt" target = "_blank"> Summarizing Data Exercise</a>
+- <a href = "https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/PlottingData.txt" target = "_blank"> Plotting Data Exercise</a>
 
 ```{=html}
 <hr style="    border: 0;
