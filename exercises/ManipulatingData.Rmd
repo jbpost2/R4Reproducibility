@@ -264,3 +264,21 @@ wine <- bind_rows(white, red)
 wine
 ```
 
+# Manipulating Data
+
+Let's begin our EDA on our full wine data set by investigating our data and creating some new variables.  
+
+1. Filter the data to only look at high-quality wines (`quality` > 6.5) and wines that have a reasonable alcohol value (`alcohol` < 132).  (`filter()`)
+2. Use chaining to now sort the data from highest `quality` to lowest. (`arrange()`)
+3. Use chaining to select only the variables that contain `acid`, the `alcohol` variable, the `type` variable, and the `quality` variable. (`select()` with `contains()`)
+4. Use chaining to add the mean and standard deviation of the `alcohol` variable to the data set for each setting of the `quality` variable.  (`group_by()`, `mutate()`)
+
+```{r}
+wine %>% 
+  filter(quality > 6.5 & alcohol < 132) %>%
+  arrange(desc(quality)) %>%
+  select(contains("acid"), alcohol, type, quality) %>%
+  group_by(quality) %>%
+  mutate(mean_alcohol = mean(alcohol), sd_alcohol = sd(alcohol))
+```
+

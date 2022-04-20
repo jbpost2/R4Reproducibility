@@ -1,0 +1,74 @@
+# Reading Data
+
+The data set we'll use for our EDA comes from the [UCI machine learning repository](https://archive.ics.uci.edu/ml/datasets/wine+quality).  There are two data sets that are 'related to red and white variants of the Prtuguese "Vinho Verde" wine.'  There are physicochemical variables and a quality score, as rated by experts.  
+
+Input variables (based on physicochemical tests):
+- fixed acidity
+- volatile acidity
+- citric acid
+- residual sugar
+- chlorides
+- free sulfur dioxide
+- total sulfur dioxide
+- density
+- pH
+- sulphates
+- alcohol
+
+Output variable (based on sensory data):
+- quality (score between 0 and 10)
+
+
+## Reading in the White Wine Data
+
+There is an excel version of the white wine data set available at <https://www4.stat.ncsu.edu/~online/datasets/white-wine.xlsx>.  
+
+- Download this file
+- Place it in a folder you know (such as your working directory, `getwd()`)
+- Import the data from the first sheet using `readxL::read_excel()`
+
+```{r}
+
+```
+
+When you print the data set out to the console, you may notice that some of the variable names are surrounded by backticks.  This is because they are non-standard (they include a space in them).  We can rename them in a number of ways.  We'll do it by reading in the variable names from the 2nd sheet of the same file.
+
+- Read in the data from the 2nd sheet.  This should return a data frame with one column containing alternative versions of the variable names.
+- Grab that column (say with `$`) and overwrite the `colnames()` of your current `tibble`.  For example,
+`colnames(my_wine) <- names_df$Variables`
+
+```{r}
+
+```
+
+Lastly, we'll add a column to this data set to indicate the wines are white.  Run the code below (with necessary modifications on the `tibble` object name).
+
+`my_wine <- mutate(my_wine, type = "white")`
+
+```{r}
+
+```
+
+
+## Reading in the Red Wine Data
+
+There is a semi-colon delimited version of the red wine data set available at <https://www4.stat.ncsu.edu/~online/datasets/red-wine.csv>.  This can be read in directly from the URL using the `readr::read_delim()` function with the `delim = ";"` argument (`read_csv2()` would work here too but it reads in some columns as character instead of double).  
+
+- You should replace the variables as done above
+- You should append a column denoting the `type` as "red"
+
+```{r}
+
+```
+
+
+## Combining the Two Wine Data Sets
+
+Our final task is to combine these two data sets into one data set.  They both have the exact same columns so this is an easy append task!  
+
+Use the `dplyr::bind_rows()` function (see the help) to create one `tibble` containing all of the wine data.  
+
+```{r}
+
+```
+

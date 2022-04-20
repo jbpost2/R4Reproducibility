@@ -1,0 +1,24 @@
+# Summarizing Data
+
+Let's start by summarizing our `quality` variable from our full wine data set.  
+
+1. First remove the extremely high values for `alcohol` (< 132) and save this as a new object we'll use going forward. (`filter()`)
+```{r}
+
+```
+2. Find the mean, standard deviation, Q1, Median, and Q3 for the `quality` variable.  (`summarize()`)
+```{r}
+
+```
+3. Find the above for the `quality` variable for the `red` and `white` wines separately. (`group_by()`)
+```{r}
+
+```
+4. Add in a new categorical variable that identifies the wines as high alcohol, medium, alochol, and low alcohol using the `dplyr::cut()` function and `mutate()` (`data %>% mutate(alc_level = cut(alcohol, 3))`).  Find the above summary statistics at each level of `type` and `alc_level` combination. (`group_by()`)
+```{r}
+
+```
+5. Lastly, let's find the correlation between `alcohol` and `quality` for each level of the `type` variable.
+```{r}
+
+```

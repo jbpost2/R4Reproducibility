@@ -1,0 +1,20 @@
+# Manipulating Data
+
+Let's begin our EDA on our full wine data set by investigating our data and creating some new variables.  
+
+1. Filter the data to only look at high-quality wines (`quality` > 6.5) and wines that have a reasonable alcohol value (`alcohol` < 132).  (`filter()`)
+```{r}
+
+```
+2. Use chaining to now sort the data from highest `quality` to lowest. (`arrange()`)
+```{r}
+
+```
+3. Use chaining to select only the variables that contain `acid`, the `alcohol` variable, the `type` variable, and the `quality` variable. (`select()` with `contains()`)
+```{r}
+
+```
+4. Use chaining to add the mean and standard deviation of the `alcohol` variable to the data set for each setting of the `quality` variable.  (`group_by()`, `mutate()`)
+```{r}
+
+```

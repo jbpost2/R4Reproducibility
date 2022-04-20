@@ -264,3 +264,104 @@ wine <- bind_rows(white, red)
 wine
 ```
 
+# Manipulating Data
+
+Let's begin our EDA on our full wine data set by investigating our data and creating some new variables.  
+
+1. Filter the data to only look at high-quality wines (`quality` > 6.5) and wines that have a reasonable alcohol value (`alcohol` < 132).  (`filter()`)
+2. Use chaining to now sort the data from highest `quality` to lowest. (`arrange()`)
+3. Use chaining to select only the variables that contain `acid`, the `alcohol` variable, the `type` variable, and the `quality` variable. (`select()` with `contains()`)
+4. Use chaining to add the mean and standard deviation of the `alcohol` variable to the data set for each setting of the `quality` variable.  (`group_by()`, `mutate()`)
+
+```{r}
+wine %>% 
+  filter(quality > 6.5 & alcohol < 132) %>%
+  arrange(desc(quality)) %>%
+  select(contains("acid"), alcohol, type, quality) %>%
+  group_by(quality) %>%
+  mutate(mean_alcohol = mean(alcohol), sd_alcohol = sd(alcohol))
+```
+
+# Summarizing Data
+
+Let's start by summarizing our `quality` variable from our full wine data set.  
+
+1. First remove the extremely high values for `alcohol` (< 132) and save this as a new object we'll use going forward. (`filter()`)
+```{r}
+valid_wine <- wine %>% 
+  filter(alcohol < 132)
+```
+2. Find the mean, standard deviation, Q1, Median, and Q3 for the `quality` variable.  (`summarize()`)
+```{r}
+valid_wine %>%
+  summarize(mean = mean(quality), 
+            sd = sd(quality),
+            Q1 = quantile(quality, 0.25),
+            median = median(quality),
+            Q3 = quantile(quality, 0.75)
+            )
+```
+3. Find the above for the `quality` variable for the `red` and `white` wines separately. (`group_by()`)
+```{r}
+valid_wine %>%
+  group_by(type) %>%
+  summarize(mean = mean(quality), 
+            sd = sd(quality),
+            Q1 = quantile(quality, 0.25),
+            median = median(quality),
+            Q3 = quantile(quality, 0.75)
+            )
+```
+4. Add in a new categorical variable that identifies the wines as high alcohol, medium, alochol, and low alcohol using the `dplyr::cut()` function and `mutate()` (`data %>% mutate(alc_level = cut(alcohol, 3))`).  Find the above summary statistics at each level of `type` and `alc_level` combination. (`group_by()`)
+```{r}
+valid_wine %>%
+  mutate(alc_level = cut(alcohol, 3)) %>%
+  group_by(type, alc_level) %>%
+  summarize(mean = mean(quality), 
+            sd = sd(quality),
+            Q1 = quantile(quality, 0.25),
+            median = median(quality),
+            Q3 = quantile(quality, 0.75)
+            )
+```
+5. Lastly, let's find the correlation between `alcohol` and `quality` for each level of the `type` variable.
+```{r}
+valid_wine %>%
+  group_by(type) %>%
+  summarize(cor(alcohol, quality))
+```
+
+# Plotting Data
+
+Let's explore our data by visualizing relationships between our variables and `quality`.  A good place to start is the `GGally::ggpairs()` function.  We have a few too many variables to make it easy to interpet the output on the entire data set.  Let's subset our data first.  **Use the data that doesn't include the erroneous alcohol values for all plots below.**
+
+1. Use the `ggpairs()` function on the variables containing 'acid', `alcohol`, `quality`, and `type`.  Use `aes(color = type)` in the `ggpairs()` function.
+```{r, out.width = "90%"}
+library(GGally)
+valid_wine %>% 
+  select(contains("acid"), alcohol, quality, type) %>% 
+  ggpairs(aes(color = type))
+```
+2. We see a number of `fixed_acidity` values that are too large.  Let's remove any `fixed_acidity` values larger than 200 and repeat the `ggpairs()` plot.
+```{r, out.width = "90%"}
+valid_wine %>% 
+  select(contains("acid"), alcohol, quality, type) %>% 
+  filter(fixed_acidity <= 200) %>%
+  ggpairs(aes(color = type))
+```
+3. There are some interesting relationships there.  Let's view some relationships a little differently (using the subsetted data from 2).  
+- Create a scatter plot of `volatile_acidity` and `citric_acid`.  
+- Make the *color* of the points depend on the `quality` variable.  
+- Add a smoothed trend line via the `geom_smooth()` layer.  Change the color of the lines to 'red' (doesn't need to go in an `aes()`) and make the `linetype` differ based on the `type` variable (this does go in a local `aes()`).
+- Add a title to the plot. (`ggtitle()`)
+```{r, out.width = "90%"}
+valid_wine %>% 
+  select(contains("acid"), alcohol, quality, type) %>% 
+  filter(fixed_acidity <= 200) %>%
+  ggplot(aes(x = volatile_acidity, y = citric_acid, color = quality)) +
+  geom_point() + 
+  geom_smooth(aes(linetype = type), color = "red") + 
+  ggtitle("Scatter plot with trend line")
+```
+
+

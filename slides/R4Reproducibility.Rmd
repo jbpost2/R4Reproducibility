@@ -1799,20 +1799,6 @@ dbGetQuery(con, "SELECT * FROM invoices") %>%
 
 ---
 
-# Let's Practice
-
-We'll add to our `.Rmd` file from the previous activity
-
-- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ReadingData.txt)
-
-Guidance:
-- Copy and paste the text from above into the bottom of the document, reknit
-- Add to the code chunks, evaluating in the notebook
-- Reknit occasionally to check the output
-
-
----
-
 # Big Recap!
 
 Dimension | Homogeneous   | Heterogeneous
@@ -1845,7 +1831,18 @@ knitr::include_graphics("img/tidyverse.png")
 ```
 
 
+---
 
+# Let's Practice
+
+We'll add to our `.Rmd` file from the previous activity
+
+- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ReadingData.txt)
+
+Guidance:
+- Copy and paste the text from above into the bottom of the document, reknit
+- Add to the code chunks, evaluating in the notebook
+- Reknit occasionally to check the output
 
 
 
@@ -2525,16 +2522,6 @@ myAirquality <- myAirquality %>%
 myAirquality
 ```
 
-
----
-
-# To R!
-
-Quick example 
-
-- Create new variables using `dplyr`!
-
-
 ---
 
 # Recap!  
@@ -2546,6 +2533,22 @@ Quick example
 - Use `if_else()` to do conditional creation
     
 - [`dplyr` and `tidyr` Cheat Sheet](https://github.com/jbpost2/R4Reproducibility/blob/main/cheatsheets/data-transformation.pdf)
+
+
+---
+
+# Let's Practice
+
+We'll add to our `.Rmd` file from the previous activity
+
+- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/ManipulatingData.txt)
+
+Guidance:
+- Copy and paste the text from above into the bottom of the document, reknit
+- Add to the code chunks, evaluating in the notebook
+- Reknit occasionally to check the output
+
+
 
 ---
 
@@ -3076,15 +3079,6 @@ titanicData %>%
 
 ---
 
-# To R!
-
-Quick example 
-
-- Summarizing numeric data!
-
-
----
-
 # Recap!
 
 - Must understand the type of data you have
@@ -3100,6 +3094,23 @@ Quick example
 
 - Across subgroups with `dplyr::group_by()`, 
 - Multiple columns/functions with `dplyr::across()`
+
+
+---
+
+# Let's Practice
+
+We'll add to our `.Rmd` file from the previous activity
+
+- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/SummarizingData.txt)
+
+Guidance:
+- Copy and paste the text from above into the bottom of the document, reknit
+- Add to the code chunks, evaluating in the notebook
+- Reknit occasionally to check the output
+
+
+
 
 
 ---
@@ -3804,15 +3815,6 @@ include_graphics("img/myGif.gif")
 
 ---
 
-# To R!
-
-- Facet to create many plots!  
-
-- Play around with themes
-
-
----
-
 # Recap!
 
 General `ggplot2` things:
@@ -3828,4 +3830,20 @@ General `ggplot2` things:
 - Faceting (multiple plots) via `facet_grid()` or `facet_wrap()`
 
 - `esquisse` is a [great package for exploring ggplot2](https://cran.r-project.org/web/packages/esquisse/vignettes/get-started.html)!
+
+
+
+---
+
+# Let's Practice
+
+We'll add to our `.Rmd` file from the previous activity
+
+- Download the prompts to add to our markdown document [here](https://raw.githubusercontent.com/jbpost2/R4Reproducibility/main/exercises/PlottingData.txt)
+
+Guidance:
+- Copy and paste the text from above into the bottom of the document, reknit
+- Add to the code chunks, evaluating in the notebook
+- Reknit occasionally to check the output
+
 

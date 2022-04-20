@@ -264,3 +264,70 @@ wine <- bind_rows(white, red)
 wine
 ```
 
+# Manipulating Data
+
+Let's begin our EDA on our full wine data set by investigating our data and creating some new variables.  
+
+1. Filter the data to only look at high-quality wines (`quality` > 6.5) and wines that have a reasonable alcohol value (`alcohol` < 132).  (`filter()`)
+2. Use chaining to now sort the data from highest `quality` to lowest. (`arrange()`)
+3. Use chaining to select only the variables that contain `acid`, the `alcohol` variable, the `type` variable, and the `quality` variable. (`select()` with `contains()`)
+4. Use chaining to add the mean and standard deviation of the `alcohol` variable to the data set for each setting of the `quality` variable.  (`group_by()`, `mutate()`)
+
+```{r}
+wine %>% 
+  filter(quality > 6.5 & alcohol < 132) %>%
+  arrange(desc(quality)) %>%
+  select(contains("acid"), alcohol, type, quality) %>%
+  group_by(quality) %>%
+  mutate(mean_alcohol = mean(alcohol), sd_alcohol = sd(alcohol))
+```
+
+# Summarizing Data
+
+Let's start by summarizing our `quality` variable from our full wine data set.  
+
+1. First remove the extremely high values for `alcohol` (< 132) and save this as a new object we'll use going forward. (`filter()`)
+```{r}
+valid_wine <- wine %>% 
+  filter(alcohol < 132)
+```
+2. Find the mean, standard deviation, Q1, Median, and Q3 for the `quality` variable.  (`summarize()`)
+```{r}
+valid_wine %>%
+  summarize(mean = mean(quality), 
+            sd = sd(quality),
+            Q1 = quantile(quality, 0.25),
+            median = median(quality),
+            Q3 = quantile(quality, 0.75)
+            )
+```
+3. Find the above for the `quality` variable for the `red` and `white` wines separately. (`group_by()`)
+```{r}
+valid_wine %>%
+  group_by(type) %>%
+  summarize(mean = mean(quality), 
+            sd = sd(quality),
+            Q1 = quantile(quality, 0.25),
+            median = median(quality),
+            Q3 = quantile(quality, 0.75)
+            )
+```
+4. Add in a new categorical variable that identifies the wines as high alcohol, medium, alochol, and low alcohol using the `dplyr::cut()` function and `mutate()` (`data %>% mutate(alc_level = cut(alcohol, 3))`).  Find the above summary statistics at each level of `type` and `alc_level` combination. (`group_by()`)
+```{r}
+valid_wine %>%
+  mutate(alc_level = cut(alcohol, 3)) %>%
+  group_by(type, alc_level) %>%
+  summarize(mean = mean(quality), 
+            sd = sd(quality),
+            Q1 = quantile(quality, 0.25),
+            median = median(quality),
+            Q3 = quantile(quality, 0.75)
+            )
+```
+5. Lastly, let's find the correlation between `alcohol` and `quality` for each level of the `type` variable.
+```{r}
+valid_wine %>%
+  group_by(type) %>%
+  summarize(cor(alcohol, quality))
+```
+
