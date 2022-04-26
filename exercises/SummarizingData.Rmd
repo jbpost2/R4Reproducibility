@@ -12,7 +12,8 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.align = 'center', 
                       out.width = "25%",
                       warning = FALSE,
-                      message = FALSE
+                      message = FALSE,
+                      cache = TRUE
                       )
 ```
 
@@ -22,7 +23,7 @@ This document serves to provide some basic information about the `tidyverse` fol
 
 The `tidyverse` is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
 
-Install the complete tidyverse with:
+Install the complete tidyverse with: asd;fjasfdjpaoisdfsapdf
 
 ```{r, eval = FALSE}
 install.packages("tidyverse")
