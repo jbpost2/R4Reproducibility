@@ -83,7 +83,7 @@ knitr::include_graphics("https://github.com/jbpost2/R4Reproducibility/raw/main/e
 
 ## tidyr  
 
-```{r}
+```{r, echo = FALSE}
 knitr::include_graphics("https://github.com/jbpost2/R4Reproducibility/raw/main/exercises/img/tidyr.png")
 ```  
 
